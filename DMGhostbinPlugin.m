@@ -29,13 +29,14 @@ static void DMShowHUDWithText(NSString *text, BOOL success)
 
 - (BOOL)canUploadToGhostbin
 {
-	return ([[self selectedTextualRepresentation] length] != 0);
+	return ([[self selectedTextualRepresentation] length] > 0);
 }
 
 - (void)uploadToGhostbin
 {
 	if (ghostbinUploader) {
 		[ghostbinUploader cancelUpload];
+		[ghostbinUploader release];
 		ghostbinUploader = nil;
 	}
 
