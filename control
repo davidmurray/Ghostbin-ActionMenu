@@ -1,0 +1,9 @@
+Package: me.cykey.ghostbin
+Name: Ghostbin for ActionMenu
+Depends: actionmenu
+Version: 1.0
+Architecture: iphoneos-arm
+Description: Quickly paste text to Ghostbin!
+Maintainer: Cykey
+Author: Cykey
+Section: Addons
