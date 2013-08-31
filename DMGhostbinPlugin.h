@@ -1,6 +1,7 @@
-#import <ActionMenu/ActionMenu.h>
+#import "ActionMenu/ActionMenu.h"
 
 @interface UIProgressHUD : UIView
+- (UIActivityIndicatorView *)_progressIndicator;
 - (void)done;
 - (void)hide;
 - (void)setText:(NSString *)text;

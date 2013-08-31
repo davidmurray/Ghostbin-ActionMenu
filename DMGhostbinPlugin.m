@@ -3,6 +3,23 @@
 
 static DMGhostbinUploader *ghostbinUploader;
 
+static void DMShowHUDWithText(NSString *text, BOOL success);
+static void DMShowHUDWithText(NSString *text, BOOL success)
+{
+	UIProgressHUD *HUD = [[[UIProgressHUD alloc] init] autorelease];
+	[HUD showInView:[[UIApplication sharedApplication] keyWindow]];
+
+	if (!success) {
+		// This is a hack.
+		[[HUD _progressIndicator] setHidden:YES];
+	} else {
+		[HUD done];
+	}
+
+	[HUD setText:text];
+	[HUD performSelector:@selector(hide) withObject:nil afterDelay:1.0f];
+}
+
 @implementation UIResponder (DMGhostbinPlugin)
 
 + (void)load
@@ -31,11 +48,7 @@ static DMGhostbinUploader *ghostbinUploader;
 
 - (void)uploader:(DMGhostbinUploader *)uploader didFinishUploadingWithURL:(NSURL *)URL
 {
-	UIProgressHUD *HUD = [[[UIProgressHUD alloc] init] autorelease];
-	[HUD showInView:[[UIApplication sharedApplication] keyWindow]];
-	[HUD setText:@"Copied"];
-	[HUD done];
-	[HUD performSelector:@selector(hide) withObject:nil afterDelay:1.0f];
+	DMShowHUDWithText(@"Copied", YES);
 
 	[[UIPasteboard generalPasteboard] setString:[URL absoluteString]];
 
@@ -45,9 +58,9 @@ static DMGhostbinUploader *ghostbinUploader;
 
 - (void)uploader:(DMGhostbinUploader *)uploader didFailWithError:(NSError *)error
 {
-	if (error) {
-		NSLog(@"[%s]:[%s] Error while uploading: %@", error, __FILE__, __FUNCTION__);
-	}
+	DMShowHUDWithText(@"Failed", NO);
+
+	NSLog(@"[%s]:[%s] Error while uploading: %@", error, __FILE__, __FUNCTION__);
 
 	[ghostbinUploader release];
 	ghostbinUploader = nil;
