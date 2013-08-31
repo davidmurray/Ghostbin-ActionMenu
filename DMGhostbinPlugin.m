@@ -61,7 +61,7 @@ static void DMShowHUDWithText(NSString *text, BOOL success)
 {
 	DMShowHUDWithText(@"Failed", NO);
 
-	NSLog(@"[%s]:[%s] Error while uploading: %@", error, __FILE__, __FUNCTION__);
+	NSLog(@"[%s]:[%s] Error while uploading: %@", __FILE__, __FUNCTION__, error);
 
 	[ghostbinUploader release];
 	ghostbinUploader = nil;
