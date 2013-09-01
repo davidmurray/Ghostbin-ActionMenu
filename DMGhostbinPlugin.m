@@ -40,9 +40,11 @@ static void DMShowHUDWithText(NSString *text, BOOL success)
 		ghostbinUploader = nil;
 	}
 
+	NSString *escapedText = [(NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)[self selectedTextualRepresentation], NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8) autorelease];
+
 	ghostbinUploader = [[DMGhostbinUploader alloc] init];
 	[ghostbinUploader setDelegate:(id<DMGhostbinUploaderDelegate>)self];
-	[ghostbinUploader beginUploadingText:[self selectedTextualRepresentation] language:@"text" expire:-1];
+	[ghostbinUploader beginUploadingText:escapedText language:@"text" expire:-1];
 }
 
 #pragma mark - DMGhostbinUploaderDelegate
